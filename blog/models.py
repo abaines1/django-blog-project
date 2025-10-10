@@ -14,7 +14,7 @@ class Post(models.Model):
     #Uses timezone 
     created_date = models.DateTimeField(default=timezone.now)
     #Publication date
-    publish_date = models.DateTimeField(blank=True, null=True)
+    published_date = models.DateTimeField(blank=True, null=True)
 
     # Methods
     def publish(self):
