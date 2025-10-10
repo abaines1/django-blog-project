@@ -6,9 +6,9 @@ from django.urls import reverse, reverse_lazy
 class Post(models.Model):
 
     #Links author to the user or superuser
-    author = models.ForeignKey('auth.User')
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    text_filed = models.TextField()
+    text_field = models.TextField()
     #Uses timezone 
     created_date = models.DateTimeField(default=timezone.now)
     #Publication date
@@ -33,10 +33,10 @@ class Post(models.Model):
 
 class Comment(models.Model):
 
-    post = models.ForeignKey('blog.Post', related_name='comments')
+    post = models.ForeignKey('blog.Post', related_name='comments', on_delete=models.CASCADE)
     author = models.CharField(max_length=100)
     text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now())
+    created_date = models.DateTimeField(default=timezone.now)
     # Reference approved_comments from approve_comments method
     approved_comments = models.BooleanField(default=False)
 
