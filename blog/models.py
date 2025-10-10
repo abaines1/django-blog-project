@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Post(models.Model):
@@ -8,7 +10,7 @@ class Post(models.Model):
     #Links author to the user or superuser
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    text_field = models.TextField()
+    text = models.TextField()
     #Uses timezone 
     created_date = models.DateTimeField(default=timezone.now)
     #Publication date
@@ -25,7 +27,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         # Return post_detail view/url with a kwarg of the primary key
         # Go to the post details from the post you just created (that is what self.pk represents here)
-        return reverse_lazy("post_detail", kwargs={'pk': self.pk})
+        return reverse("post_detail", kwargs={'pk': self.pk})
     
     def __str__(self):
         return self.title
@@ -34,7 +36,7 @@ class Post(models.Model):
 class Comment(models.Model):
 
     post = models.ForeignKey('blog.Post', related_name='comments', on_delete=models.CASCADE)
-    author = models.CharField(max_length=100)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     # Reference approved_comments from approve_comments method
@@ -48,7 +50,7 @@ class Comment(models.Model):
     # This means that we will probably go back to the posts list (list of posts) page instead of back to post_detail (the details of a post)
     # Homepage is going to be the list of all the posts
     def get_absolute_url(self):
-        return reverse_lazy("post_list")
+        return reverse("post_list")
 
     def __str__(self):
         return self.text 
