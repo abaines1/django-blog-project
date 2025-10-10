@@ -18,7 +18,7 @@ class Post(models.Model):
 
     # Methods
     def publish(self):
-        self.publish_date = timezone.now()
+        self.published_date = timezone.now()
         self.save()
 
     def approve_comments(self):
