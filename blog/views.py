@@ -39,7 +39,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
     # Login required attributes
     login_url = '/login'
-    redirect_field_name = 'blog/post_detail.html'
+    redirect_field_name = next
     form_class = PostForm
 
     model = Post
@@ -50,8 +50,8 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
 
-    login_url = '/login'
-    redirect_field_name = 'blog/post_detail.html'
+    login_url = '/accounts/login'
+    redirect_field_name = next
     form_class = PostForm
 
     model = Post
@@ -59,13 +59,13 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 class PostDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Post
-    success_url = reverse_lazy('post_list')
+    success_url = reverse_lazy('blog:post_list')
 
 
 class DraftListView(LoginRequiredMixin, ListView):
 
-    login_url = '/login'
-    redirect_field_name = 'blog/post_list.html'
+    login_url = '/accounts/login'
+    redirect_field_name = next
     
     model = Post
 
