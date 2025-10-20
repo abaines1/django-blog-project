@@ -27,7 +27,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         # Return post_detail view/url with a kwarg of the primary key
         # Go to the post details from the post you just created (that is what self.pk represents here)
-        return reverse("post_detail", kwargs={'pk': self.pk})
+        return reverse("blog:post_detail", kwargs={'pk': self.pk})
     
     def __str__(self):
         return self.title

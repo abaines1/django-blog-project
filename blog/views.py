@@ -48,6 +48,11 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     # We want only people who are LOGGED IN to have access to creating Posts
     # Mixins are essentially decorators but for CBVs
 
+    def form_valid(self, form):
+        # Set the author before saving the form
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 class PostUpdateView(LoginRequiredMixin, UpdateView):
 
     login_url = '/accounts/login'
