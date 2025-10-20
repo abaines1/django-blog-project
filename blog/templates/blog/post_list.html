@@ -6,10 +6,10 @@
         <h1><a href="{% url 'blog:post_detail' pk=post.pk %}"> {{ post.title }} </a></h1>
     </div>
     <div class="date">
-        <p>Publsihed on: {{post.published|date:"D M Y"}}</p>
+        <p>Publsihed on: {{post.published_date|date:"D M Y"}}</p>
     </div>
     <div>
-        <a href="{% url 'blog:post_detail' pk=post.pk %}"> Comments: {{ post.approved_comments.count }}</a>
+        <a href="{% url 'blog:post_detail' pk=post.pk %}"> Comments: {{ post.approve_comments.count }}</a>
     </div>
     {% endfor %}
 </div>
