@@ -4,78 +4,89 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <meta name="description" content="A personal Django blog project.">
+    <title>{% block title %}My Blog{% endblock %}</title>
 
-    <!-- Medium Style Editor -->
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+
+    <!-- Medium Editor -->
     <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet"
+          href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css"
+          type="text/css"
+          media="screen"
+          charset="utf-8">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 
     <!-- Fonts -->
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons (for user/login icon) -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-light bg-light custom-navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
         <div class="container">
-            <ul class="navbar-nav">
-                <li>
-                    <a href="{% url 'blog:post_list' %}" class="navbar-brand bigbrand"> My Blog </a>
-                </li>
-                <li>
-                    <a href="{% url 'blog:about' %}" class="navbar-link"> About </a>
-                </li>
-                <li>
-                    <a href="https://github.com/abaines1" class="navbar-link"> GitHub </a> 
-                </li> 
-                <li>
-                    <a href="https://linkedin.com/" class="navbar-link"> LinkedIn   </a>
-                </li>
-            </ul>
-            <!-- Right aligned in navbar -->
-            <ul class="navbar-nav ms-auto">
-                {% if user.is_authenticated %}
-                <li>
-                    <a href="{% url 'blog:post_new' %}"> New Post </a>
-                </li>
-                <li>
-                    <a href="{% url 'blog:post_drafts_list' %}"> Drafts </a>
-                </li>
-                <li>
-                    <a href="{% url 'logout' %}"> Logout </a>
-                </li>
-                <li>
-                    <a href="/"> Welcome {{ user.username }}! </a>
-                </li>
-                {% else %}
-                <li><a href="{% url 'login' %}" class="navbar ms-auto"> <span class="glyphicon glyphicon-user"></span> </a></li>
-                {% endif %}
-            </ul>
+            <a class="navbar-brand bigbrand" href="{% url 'blog:post_list' %}">My Blog</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Left-aligned links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="{% url 'blog:about' %}" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/abaines1" class="nav-link" target="_blank">GitHub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://linkedin.com/" class="nav-link" target="_blank">LinkedIn</a>
+                    </li>
+                </ul>
+
+                <!-- Right-aligned links -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a href="{% url 'blog:post_new' %}" class="nav-link">New Post</a></li>
+                        <li class="nav-item"><a href="{% url 'blog:post_drafts_list' %}" class="nav-link">Drafts</a></li>
+                        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+                        <li class="nav-item">
+                            <span class="nav-link disabled">Welcome {{ user.username }}!</span>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}" class="nav-link"><i class="bi bi-person"></i> Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- Body Block -->
-    {% block body_block %}
-    <!-- Line of code below: Used to test the monteserrat google font -->
-    <!-- <div class="container montserrat"></div> -->
-     <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="blog_posts">
-                    {% block content %}
-                    {% endblock %}
-                </div>
+    <!-- Main Content -->
+    <div class="content container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
 
-            </div>
-        </div>
-     </div>
-    {% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <!-- Bootstrap Bundle (with Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
 </body>
 </html>
