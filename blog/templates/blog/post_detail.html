@@ -8,14 +8,18 @@
         {{ post.published_date }}
     </div>
     {% else %}
-        <a class='btn btn-default' href="{% url 'blog:post_publish' pk=post.pk %}"> Publish </a>
+        <a class='btn-primary' href="{% url 'blog:post_publish' pk=post.pk %}"> Publish </a>
     {% endif %}
 
     <p class="postcontent"> {{post.text|safe|linebreaksbr}} </p>
 
     {% if user.is_authenticated %}
-        <a class="btn btn-primary" href="{% url 'blog:post_edit' pk=post.pk %}"> <span class="glyphicon glyphicon-pencil"></span></a>
-        <a class="btn btn-primary" href="{% url 'blog:post_remove' pk=post.pk %}"> <span class="glyphicon glyphicon-remove"></span></a>
+       <button class="btn-primary">
+            <a href="{% url 'blog:post_edit' pk=post.pk %}"> Edit </a>
+       </button>
+        <button class="btn-danger">
+            <a class="btn-danger" href="{% url 'blog:post_remove' pk=post.pk %}"> Remove </a>
+        </button>
     {% endif %}
 
     <hr>

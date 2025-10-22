@@ -4,7 +4,6 @@
 <form action="{% url 'blog:post_new' %}" class="post-form" method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    <button type="submit" class="save btn btn-default"> Save </button>
+    <button type="submit" class="save btn-primary"> Save </button>
 </form>
-<script> var editor = new MediumEditor('.editable'); </script>
 {% endblock %}
