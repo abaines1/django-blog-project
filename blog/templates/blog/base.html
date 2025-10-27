@@ -64,7 +64,12 @@
                     {% if user.is_authenticated %}
                         <li class="nav-item"><a href="{% url 'blog:post_new' %}" class="nav-link">New Post</a></li>
                         <li class="nav-item"><a href="{% url 'blog:post_drafts_list' %}" class="nav-link">Drafts</a></li>
-                        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+                        <li class="nav-item d-flex align-items-center">
+                            <form method="post" action="{% url 'logout' %}" class="m-0 p-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link nav-link p-0 m-0">Logout</button>
+                            </form>
+                        </li>
                         <li class="nav-item">
                             <span class="nav-link disabled">Welcome {{ user.username }}!</span>
                         </li>
